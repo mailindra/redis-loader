@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  redis-latest:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-latest-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - redis-network
+
+  redis-old:
+    image: redis:6.0
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis-old-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - redis-network
+
+volumes:
+  redis-latest-data:
+  redis-old-data:
+
+networks:
+  redis-network:
+    driver: bridge
